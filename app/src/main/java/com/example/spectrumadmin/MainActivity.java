@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent Intent = new Intent(MainActivity.this, MainActivity.class);
                 startActivity(Intent);
-
+                finish();
 
             }
         });
@@ -88,9 +89,9 @@ public class MainActivity extends AppCompatActivity {
     public void btnAddOnClick(View v) {
 
         String name = editTextName.getText().toString().trim();
-        String country=editTextCountry.getText().toString().trim();
+        String purpose=editTextCountry.getText().toString().trim();
         double weight=Double.parseDouble(editTextWeight.getText().toString().trim());
-        User user= new User(name, country, weight);
+        User user= new User(name, purpose, weight);
 
         if (TextUtils.isEmpty(name)) {
             Toast.makeText(getApplicationContext(), "Please enter name",
@@ -98,8 +99,8 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        if (TextUtils.isEmpty(country)) {
-            Toast.makeText(getApplicationContext(), "Please enter country",
+        if (TextUtils.isEmpty(purpose)) {
+            Toast.makeText(getApplicationContext(), "Please enter purpose",
                     Toast.LENGTH_SHORT).show();
             return;
         }
@@ -128,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 listUsers.add(dataSnapshot.getValue(User.class));
+                Log.v("data", dataSnapshot.getKey());
                 displayUsers(listUsers);
             }
 
@@ -148,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getApplicationContext(),"Canceled",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),databaseError.toString(),Toast.LENGTH_SHORT).show();
             }
         });
 

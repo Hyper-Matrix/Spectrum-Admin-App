@@ -32,7 +32,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="105dp"
+            android:layout_height="150dp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -56,7 +56,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5dp"
                     android:layout_toRightOf="@+id/nameEditText"
-                    android:hint="Item" />
+                    android:hint="Item names" />
 
             </LinearLayout>
 
@@ -68,7 +68,7 @@
 
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
-                android:hint="Weight"
+                android:hint="Quantity"
                 android:inputType="numberDecimal" />
 
             <ImageButton
@@ -115,8 +115,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="No Users Found">
-    </TextView>
+        android:text="Loading.."></TextView>
 
     <ImageButton
         android:id="@+id/refreshbutton"

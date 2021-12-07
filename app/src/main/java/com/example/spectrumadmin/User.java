@@ -3,14 +3,14 @@ package com.example.spectrumadmin;
 public class User {
 
     private String name;
-    private String country;
+    private String purpose;
     private double weight;
 
 
     public User(){}
     public User(String n, String c, double w){
         this.name=n;
-        this.country=c;
+        this.purpose=c;
         this.weight=w;
 
     }
@@ -18,8 +18,8 @@ public class User {
         return name;
     }
 
-    public String getCountry() {
-        return country;
+    public String getPurpose() {
+        return purpose;
     }
 
     public double getWeight() {
@@ -30,7 +30,7 @@ public class User {
 
     @Override
     public String toString() {
-        return name +" "+ country +" " +weight;
+        return name +" "+ purpose +" " +weight;
     }
 }
 

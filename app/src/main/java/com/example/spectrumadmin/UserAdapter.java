@@ -47,7 +47,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
         final User user = userList.get(position);
 
         holder.myTextView.setText(user.getName());
-        holder.myCountryTextView.setText(user.getCountry());
+        holder.myCountryTextView.setText(user.getPurpose());
         holder.myWeight.setText(String.valueOf(user.getWeight()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

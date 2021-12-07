@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -25,7 +26,7 @@ Button loginbtn;
 EditText memail;
 EditText mpassword;
 FirebaseAuth fAuth;
-
+LoadingDialog loadingDialog;
 Animation scaleUp,scaleDown;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +40,13 @@ Animation scaleUp,scaleDown;
         scaleUp = AnimationUtils.loadAnimation(this,R.anim.scale_up);
         scaleDown = AnimationUtils.loadAnimation(this,R.anim.scale_down);
 
-        final LoadingDialog loadingDialog=new LoadingDialog(LoginActivity.this);
-
+         loadingDialog=new LoadingDialog(LoginActivity.this);
+        if (fAuth.getCurrentUser() != null) {
+            // User is signed in (getCurrentUser() will be null if not signed in)
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         loginbtn.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -57,6 +63,7 @@ Animation scaleUp,scaleDown;
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadingDialog.startLoadingDialog();
                 String email= memail.getText().toString().trim();
                 String password=mpassword.getText().toString().trim();
 
@@ -72,25 +79,24 @@ Animation scaleUp,scaleDown;
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                       if(task.isSuccessful()){
-
-
-
+                          loadingDialog.dismissDialog();
                           Toast.makeText(LoginActivity.this,"welcome admin",Toast.LENGTH_SHORT).show();
                           Intent Intent= new Intent(LoginActivity.this,MainActivity.class);
                           startActivity(Intent);
-
-                          loadingDialog.startLoadingDialog();
-                          Handler handler=new Handler();
+                            finish();
+                        /*  Handler handler=new Handler();
                           handler.postDelayed(new Runnable() {
                               @Override
                               public void run() {
                                   loadingDialog.dismissDialog();
                               }
-                          },3000);
+                          },3000);*/
                           //finish();
                       }
                       else {
-                          Toast.makeText(LoginActivity.this,"error!!"+task.getException().getMessage(),Toast.LENGTH_SHORT);
+                          loadingDialog.dismissDialog();
+                          Toast.makeText(LoginActivity.this,task.getException().getMessage().toString(),Toast.LENGTH_SHORT);
+                          Log.v("error",task.getException().toString());
                       }
                     }
                 });
@@ -113,5 +119,4 @@ Animation scaleUp,scaleDown;
 
     }
 
-
-}
+ }
